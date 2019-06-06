@@ -28,12 +28,18 @@ namespace SalesScreen.CaseInterview.Services
 
         public static List<Category> GetCategories()
         {
-            throw new NotImplementedException();
+            var endpoint = $"category";
+            var jsonString = GetJson(endpoint);
+
+            return JsonConvert.DeserializeObject<List<Category>>(jsonString);
         }
 
         public static List<CategoryMonthlyBudget> GetCategoryMonthlyBudgets(int accountId)
         {
-            throw new NotImplementedException();
+            var endpoint = $"budget/{accountId}";
+            var jsonString = GetJson(endpoint);
+
+            return JsonConvert.DeserializeObject<List<CategoryMonthlyBudget>>(jsonString);
         }
 
         private static string GetJson(string endpoint)
