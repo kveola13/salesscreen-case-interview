@@ -6,7 +6,7 @@ namespace SalesScreen.CaseInterview
     {
         static void Main(string[] args)
         {
-            var bankAccount = new BankAccount(11);
+            var bankAccount = new BankAccount(1);
 
             //Task 1 - Print the available funds (balance + credit) for the bank account
             bankAccount.FetchAccountInfo();

@@ -4,21 +4,25 @@ using SalesScreen.CaseInterview.Services;
 
 namespace SalesScreen.CaseInterview
 {
-    public class BankAccount {
+    public class BankAccount
+    {
         private readonly int AccountId;
         private AccountInfo _accountInfo;
 
-        public BankAccount(int accountId) {
+        public BankAccount(int accountId)
+        {
             AccountId = accountId;
         }
 
-        public double GetAvailableFunds() {
-            return _accountInfo.Balance + _accountInfo.Balance;
+        public double GetAvailableFunds()
+        {
+            return _accountInfo.Balance + _accountInfo.Credit;
         }
 
         #region API
 
-        public void FetchAccountInfo() {
+        public void FetchAccountInfo()
+        {
             _accountInfo = BankService.GetAccountInfo(AccountId);
         }
 
