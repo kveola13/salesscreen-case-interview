@@ -10,31 +10,40 @@ namespace SalesScreen.CaseInterview.Services
     {
         private const string BaseUrl = "https://salesscreen-bank-api.azurewebsites.net/api/";
 
-        public static AccountInfo GetAccountInfo(int accountId) {
+        public static AccountInfo GetAccountInfo(int accountId)
+        {
             var endpoint = $"account/{accountId}";
             var jsonString = GetJson(endpoint);
 
             return JsonConvert.DeserializeObject<AccountInfo>(jsonString);
         }
 
-        public static List<Transaction> GetTransactions(int accountId) {
+        public static List<Transaction> GetTransactions(int accountId)
+        {
+            var endpoint = $"transaction/{accountId}";
+            var jsonString = GetJson(endpoint);
+
+            return JsonConvert.DeserializeObject<List<Transaction>>(jsonString);
+        }
+
+        public static List<Category> GetCategories()
+        {
             throw new NotImplementedException();
         }
 
-        public static List<Category> GetCategories() {
+        public static List<CategoryMonthlyBudget> GetCategoryMonthlyBudgets(int accountId)
+        {
             throw new NotImplementedException();
         }
 
-        public static List<CategoryMonthlyBudget> GetCategoryMonthlyBudgets(int accountId) {
-            throw new NotImplementedException();
-        }
-
-        private static string GetJson(string endpoint) {
-            using (var client = new HttpClient()) {
+        private static string GetJson(string endpoint)
+        {
+            using (var client = new HttpClient())
+            {
                 var url = $"{BaseUrl}/{endpoint}";
                 var response = client.GetAsync(url).Result;
                 response.EnsureSuccessStatusCode();
-                
+
                 return response.Content.ReadAsStringAsync().Result;
             }
         }
