@@ -49,12 +49,9 @@ namespace SalesScreen.CaseInterview
             return totalSumOfAllTransactions;
         }
 
-        public void GetCategories()
+        public List<Category> GetCategories()
         {
-            foreach (var category in _categoryInfo)
-            {
-                Console.WriteLine(category.Name);
-            }
+            return _categoryInfo.ToList();
         }
 
         public void GetMonthlyBudgetForUser(int amountOfMonths)
