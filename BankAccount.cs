@@ -33,7 +33,7 @@ namespace SalesScreen.CaseInterview
             Console.WriteLine($"Total sum of transactions for this user: {total}");
             Console.WriteLine("Average transaction sum: {0:0.00}", total / count);
         }
-        public double GetTransactionsForCategory(int month, int category)
+        public double GetMonthlyTransactionsForCategory(int month, int category)
         {
             double totalSumOfAllTransactions = 0;
             foreach (var transaction in _transactionInfo)
@@ -79,7 +79,7 @@ namespace SalesScreen.CaseInterview
                 double difference = 0;
                 foreach (var budgetItem in _monthlyBudgetInfo)
                 {
-                    expenditure = GetTransactionsForCategory(month, budgetItem.CategoryId);
+                    expenditure = GetMonthlyTransactionsForCategory(month, budgetItem.CategoryId);
                     budgetCategory = categoryList[budgetItem.CategoryId - 1].Name;
                     difference = budgetItem.Amount - expenditure;
                     Console.Write(date.ToString("MMMM", new CultureInfo("en-GB")));
