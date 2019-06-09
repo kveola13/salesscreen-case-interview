@@ -54,7 +54,7 @@ namespace SalesScreen.CaseInterview
             {
                 if (month == transaction.Date.Month)
                 {
-                    if (transaction.CategoryId == category + 1)
+                    if (transaction.CategoryId == category)
                     {
                         totalSumOfAllTransactions += transaction.Amount;
                     }
@@ -96,6 +96,7 @@ namespace SalesScreen.CaseInterview
                 foreach (var budgetItem in _monthlyBudgetInfo)
                 {
                     expenditure = GetMonthlyTransactionsForCategory(month, budgetItem.CategoryId);
+                    Console.WriteLine($"item: {budgetItem.CategoryId} expenditure: {expenditure}");
                     budgetCategory = categoryList[budgetItem.CategoryId - 1].Name;
                     difference = budgetItem.Amount - expenditure;
                     Console.Write(date.ToString("MMMM", new CultureInfo("en-GB")));
