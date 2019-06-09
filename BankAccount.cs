@@ -22,16 +22,30 @@ namespace SalesScreen.CaseInterview
 
         public double GetAvailableFunds()
         {
+            FetchAccountInfo();
             return _accountInfo.Balance + _accountInfo.Credit;
+        }
+
+        public List<Transaction> GetTransactionsFromDaysAgo(int subtractDays)
+        {
+            return _transactionInfo.Where(transaction => transaction.Date > DateTime.Now.AddDays(-subtractDays)).ToList();
+        }
+
+        public double GetTotalOfTransactionsFromDaysAgo(int subtractDays)
+        {
+            return GetTransactionsFromDaysAgo(subtractDays).Sum(transaction => transaction.Amount);
+        }
+
+        public double GetAverageOfTransactionsFromDaysAgo(int subtractDays)
+        {
+            return GetTotalOfTransactionsFromDaysAgo(subtractDays) / GetTransactionsFromDaysAgo(subtractDays).Count;
         }
 
         public void GetTransactionInfo(int subtractDays)
         {
-            DateTimeOffset dateOffset = DateTimeOffset.Now.AddDays(-subtractDays);
-            double total = _transactionInfo.Where(transaction => transaction.Date > dateOffset).Sum(transaction => transaction.Amount);
-            int count = _transactionInfo.Where(transaction => transaction.Date > dateOffset).Count();
-            Console.WriteLine($"Total sum of transactions for this user: {total}");
-            Console.WriteLine("Average transaction sum: {0:0.00}", total / count);
+            FetchTransactionInfo();
+            Console.WriteLine($"Total sum of transactions for this user: {GetTotalOfTransactionsFromDaysAgo(subtractDays)}");
+            Console.WriteLine("Average transaction sum: {0:0.00}", GetAverageOfTransactionsFromDaysAgo(subtractDays));
         }
         public double GetMonthlyTransactionsForCategory(int month, int category)
         {
@@ -56,6 +70,13 @@ namespace SalesScreen.CaseInterview
 
         public void GetMonthlyBudgetForUser(int amountOfMonths)
         {
+            FetchCategoryInfo();
+            FetchMontlhyBudgetForUser();
+
+            double expenditure = 0;
+            var budgetCategory = "";
+            double difference = 0;
+
             List<Category> categoryList = new List<Category>();
             foreach (var Category in _categoryInfo)
             {
@@ -71,9 +92,7 @@ namespace SalesScreen.CaseInterview
             {
                 DateTime date = DateTime.Now.AddMonths(-monthIndex);
                 int month = date.Month;
-                double expenditure = 0;
-                var budgetCategory = "";
-                double difference = 0;
+
                 foreach (var budgetItem in _monthlyBudgetInfo)
                 {
                     expenditure = GetMonthlyTransactionsForCategory(month, budgetItem.CategoryId);
